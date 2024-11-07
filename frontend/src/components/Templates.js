@@ -258,7 +258,7 @@ const Templates = () => {
                   value={formData.payment_block.text ? formData.payment_block.text.join('\n') : ''}
                   onChange={handleInputChange}
                   className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F] w-full"
-                  rows="4"
+                  rows="5"
                 />
               </div>
             </div>
