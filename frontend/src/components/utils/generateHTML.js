@@ -18,6 +18,7 @@ export const generateHTML = (formValues, templateData) => {
     description,
     sku,
     skuLetter,
+    item,
     cost,
   } = formValues
 
@@ -75,27 +76,34 @@ export const generateHTML = (formValues, templateData) => {
     `
   }
 
-  if (weight || movieType) {
+  if (item !== 'slides' && (weight || movieType)) {
     tableRows += `
-      <tr>
-        <td style="border: 3px solid black;">Weight:</td>
-        <td style="border: 3px solid black;">${weight || ''}</td>
-        <td style="border: 3px solid black;">Movie Type:</td>
-        <td style="border: 3px solid black;">${movieType || ''}</td>
-      </tr>
-    `
+    <tr>
+      <td style="border: 3px solid black;">Weight:</td>
+      <td style="border: 3px solid black;">${weight || ''}</td>
+      <td style="border: 3px solid black;">Movie Type:</td>
+      <td style="border: 3px solid black;">${movieType || ''}</td>
+    </tr>
+  `
   }
 
-  if (width || height) {
+  if (item === 'slides') {
+    tableRows += `
+    <tr>
+      <td style="border: 3px solid black;">Size:</td>
+      <td style="border: 3px solid black;" colspan="3">${width || ''} millimeters</td>
+    </tr>
+  `
+  } else if (width || height) {
     const widthCm = inchesToCentimeters(width)
     const heightCm = inchesToCentimeters(height)
 
     tableRows += `
-      <tr>
-        <td style="border: 3px solid black;">Size:</td>
-        <td style="border: 3px solid black;" colspan="3">Inches: ${width} x ${height}  - Centimeters: ${widthCm} x ${heightCm} Approx.</td>
-      </tr>
-    `
+    <tr>
+      <td style="border: 3px solid black;">Size:</td>
+      <td style="border: 3px solid black;" colspan="3">Inches: ${width} x ${height} - Centimeters: ${widthCm} x ${heightCm} Approx.</td>
+    </tr>
+  `
   }
 
   if (agency) {

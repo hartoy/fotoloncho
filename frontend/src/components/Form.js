@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import validationSchema from './utils/validationSchema'
@@ -15,9 +15,20 @@ import Spinner from './Spinner'
 
 const MyForm = ({ isEditing, initialValues }) => {
   const [loading, setLoading] = useState(false)
+  const [isSlides, setIsSlides] = useState(false)
   const [skuAvailabilityMessage, setSkuAvailabilityMessage] = useState('')
   const [movieNumberAvailabilityMessage, setMovieNumberAvailabilityMessage] = useState('')
   const navigate = useNavigate()
+
+  const handleItemChange = (event) => {
+    const selectedItem = event.target.value
+
+    if (selectedItem === 'slides') {
+      setIsSlides(true)
+    } else {
+      setIsSlides(false)
+    }
+  }
 
   const handleSkuChange = async (e, setFieldValue, values) => {
     const newSku = e.target.value
@@ -96,11 +107,16 @@ const MyForm = ({ isEditing, initialValues }) => {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
 
+      if (item === 'slides') {
+        console.log('Item is slides')
+
+        values.weight = 'Normal'
+        values.height = 1
+      }
+
       if (isEditing) {
-        console.log('isEditing', values)
         await updateArticle(values.sku, values)
       } else {
-        console.log('isCreating', values)
         await createArticle(values)
       }
 
@@ -124,6 +140,17 @@ const MyForm = ({ isEditing, initialValues }) => {
               as="select"
               name="item"
               className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
+              onChange={(e) => {
+                handleItemChange(e)
+                setFieldValue('item', e.target.value)
+                if (e.target.value === 'slides') {
+                  setFieldValue('weight', 'Normal')
+                  setFieldValue('height', '1')
+                } else {
+                  setFieldValue('weight', '')
+                  setFieldValue('height', '')
+                }
+              }}
             >
               <option value="">Selecciona</option>
               <option value="photos">Photos</option>
@@ -344,24 +371,29 @@ const MyForm = ({ isEditing, initialValues }) => {
 
           <div className="flex mb-4">
             <div className="w-1/3 pr-2">
-              <label className="block mb-1 pl-1 font-semibold">
-                Weight<span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
+              <label className={`block mb-1 pl-1 font-semibold ${isSlides ? 'text-gray-400' : ''}`}>
+                Weight
+                <span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
               </label>
-              <Field
-                as="select"
-                name="weight"
-                className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
-              >
-                <option value="">-</option>
-                <option value="Normal">Normal</option>
-                <option value="Double">Double</option>
-              </Field>
+              {!isSlides && (
+                <Field
+                  as="select"
+                  name="weight"
+                  className={`border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]`}
+                >
+                  <option value="">-</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Double">Double</option>
+                </Field>
+              )}
               <ErrorMessage name="weight" component="div" className="text-red-500 pl-2 pt-2 font-semibold" />
             </div>
+
             <div className="flex w-2/3 pl-2">
               <div className="w-1/2 pr-2">
                 <label className="block mb-1 pl-1 font-semibold">
-                  Width (pulgadas) <span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
+                  {isSlides ? 'Width (milimeters)' : 'Width (pulgadas)'}
+                  <span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
                 </label>
                 <Field
                   name="width"
@@ -372,14 +404,19 @@ const MyForm = ({ isEditing, initialValues }) => {
               </div>
 
               <div className="w-1/2 pl-2">
-                <label className="block mb-1 pl-1 font-semibold">
-                  Height (pulgadas) <span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
+                <label className={`block mb-1 pl-1 font-semibold ${isSlides ? 'text-gray-400' : ''}`}>
+                  Height ({isSlides ? 'milimeters' : 'pulgadas'})
+                  <span className="text-red-500 pl-2 pt-2 font-extrabold"> *</span>
                 </label>
-                <Field
-                  name="height"
-                  type="number"
-                  className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
-                />
+
+                {!isSlides && (
+                  <Field
+                    name="height"
+                    type="number"
+                    className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
+                  />
+                )}
+
                 <ErrorMessage name="height" component="div" className="text-red-500 pl-2 pt-2 font-semibold" />
               </div>
             </div>
