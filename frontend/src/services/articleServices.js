@@ -29,7 +29,6 @@ export const createArticle = async (articleData) => {
 }
 
 export const updateArticle = async (sku, articleData) => {
-  console.log('data que le llega', articleData)
   try {
     const formData = new FormData()
     Object.keys(articleData).forEach((key) => {

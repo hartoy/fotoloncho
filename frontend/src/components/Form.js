@@ -82,36 +82,41 @@ const MyForm = ({ isEditing, initialValues }) => {
         delete values.img
       }
 
-      const templateData = await getTemplateByType(values.item.toLowerCase())
-      const htmlContent = generateHTML(values, templateData)
-
-      const blob = new Blob([htmlContent], { type: 'text/html' })
-      const url = URL.createObjectURL(blob)
-
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${sku} - ${title}.html`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-
       if (item === 'slides') {
         console.log('Item is slides')
 
         values.weight = 'Normal'
         values.height = 1
       }
-
+      let result
       if (isEditing) {
-        await updateArticle(values.sku, values)
+        result = await updateArticle(values.sku, values)
       } else {
-        await createArticle(values)
+        result = await createArticle(values)
       }
 
-      navigate('/articles')
+      if (result) {
+        const templateData = await getTemplateByType(values.item.toLowerCase())
+        const htmlContent = generateHTML(values, templateData)
+
+        const blob = new Blob([htmlContent], { type: 'text/html' })
+        const url = URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${sku} - ${title}.html`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+
+        navigate('/articles')
+      } else {
+        throw new Error('Error desconocido en la creación o actualización del artículo.')
+      }
     } catch (error) {
       console.error('Error en el procesamiento:', error)
+      alert('Hubo un problema al procesar el artículo. Por favor, verifica los datos.')
     } finally {
       setLoading(false)
     }

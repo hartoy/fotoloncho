@@ -57,14 +57,30 @@ export const generateHTML = (formValues, templateData) => {
   }
 
   if (year || rerelease) {
-    tableRows += `
+    if (year && rerelease) {
+      tableRows += `
       <tr>
         <td style="border: 3px solid black;">Year:</td>
-        <td style="border: 3px solid black;"width="180">${year || ''}</td>
+        <td style="border: 3px solid black;" width="180">${year}</td>
         <td style="border: 3px solid black;" width="190">Re-Release:</td>
-        <td style="border: 3px solid black;" width="189">${rerelease || ''}</td>
+        <td style="border: 3px solid black;" width="189">${rerelease}</td>
       </tr>
     `
+    } else if (year) {
+      tableRows += `
+      <tr>
+        <td style="border: 3px solid black;">Year:</td>
+        <td style="border: 3px solid black;" colspan="3">${year}</td>
+      </tr>
+    `
+    } else if (rerelease) {
+      tableRows += `
+      <tr>
+        <td style="border: 3px solid black;">Re-Release:</td>
+        <td style="border: 3px solid black;" colspan="3">${rerelease}</td>
+      </tr>
+    `
+    }
   }
 
   if (color) {
@@ -76,15 +92,23 @@ export const generateHTML = (formValues, templateData) => {
     `
   }
 
-  if (item !== 'slides' && (weight || movieType)) {
+  if (item !== 'slides' && weight) {
     tableRows += `
     <tr>
       <td style="border: 3px solid black;">Weight:</td>
-      <td style="border: 3px solid black;">${weight || ''}</td>
-      <td style="border: 3px solid black;">Movie Type:</td>
-      <td style="border: 3px solid black;">${movieType || ''}</td>
+      <td style="border: 3px solid black;" colspan="3">${weight || ''}</td>
+    
     </tr>
   `
+  }
+
+  if (movieType) {
+    tableRows += `
+      <tr>
+        <td style="border: 3px solid black;">Movie Type:</td>
+        <td style="border: 3px solid black;" colspan="3">${movieType}</td>
+      </tr>
+    `
   }
 
   if (item === 'slides') {
