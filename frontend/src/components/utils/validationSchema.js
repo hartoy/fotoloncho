@@ -2,13 +2,13 @@ import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
   sku: Yup.number().typeError('El SKU solo puede contener números.').required('El SKU es obligatorio.'),
-  skuLetter: Yup.string().matches(/^[CLOP]$/, 'Solo se permiten las letras: C, L, O, P'),
+  skuLetter: Yup.string().matches(/^[CLOPS]$/, 'Solo se permiten las letras: C, L, O, P y S'),
   title: Yup.string().max(120, 'Máximo 120 caracteres').required('El título es obligatorio.'),
   aka: Yup.string().max(120, 'Máximo 120 caracteres'),
   item: Yup.string().required('Selecciona un item.'),
   actor: Yup.string().typeError('El actor debe ser solo letras.'),
   agency: Yup.string().typeError('Agency solo puede llevar letras.'),
-  year: Yup.number().typeError('El año debe ser un número.'),
+  year: Yup.string(),
   rerelease: Yup.number().typeError('El re-release debe ser un número.'),
   color: Yup.string().required('Selecciona un color.'),
   movieType: Yup.string(),
@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
     .typeError('La altura debe ser un número.'),
   description: Yup.string().max(2000, 'Máximo 2000 caracteres.'),
   price: Yup.number().required('El precio es obligatorio.').typeError('El precio debe ser un número válido.'),
-  cost: Yup.number().typeError('El costo debe ser un número válido.'),
+  cost: Yup.string(),
   img: Yup.mixed().required('La imagen es obligatoria.'),
 })
 

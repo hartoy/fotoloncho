@@ -173,21 +173,19 @@ const Templates = () => {
               />
             </div>
 
-            {formData.red_title && (
-              <div className="mb-4">
-                <label className="block mb-1 pl-1 font-semibold" htmlFor="red_title">
-                  Título Rojo
-                </label>
-                <input
-                  type="text"
-                  name="red_title"
-                  id="red_title"
-                  value={formData.red_title || ''}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F] w-full"
-                />
-              </div>
-            )}
+            <div className="mb-4">
+              <label className="block mb-1 pl-1 font-semibold" htmlFor="red_title">
+                Título Rojo
+              </label>
+              <input
+                type="text"
+                name="red_title"
+                id="red_title"
+                value={formData.red_title || ''}
+                onChange={handleInputChange}
+                className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F] w-full"
+              />
+            </div>
 
             <div className="mb-4">
               <label className="block mb-1 pl-1 font-semibold" htmlFor="first_block.text">

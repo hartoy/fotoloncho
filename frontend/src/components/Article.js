@@ -34,9 +34,14 @@ const Article = ({ article, onEdit, onDelete }) => {
                   Movie Number: <span className="font-bold italic ms-1">{article.movieNumber}</span>
                 </p>
               )}
+              {article.price && (
+                <p className="font-semibold transition-transform duration-300 hover:scale-110">
+                  Precio: <span className="font-bold italic ms-1">{article.price}</span>
+                </p>
+              )}
               {article.cost && (
                 <p className="font-semibold transition-transform duration-300 hover:scale-110">
-                  Costo: <span className="font-bold italic text-green-600 ms-1">{`$${article.cost}`}</span>
+                  Costo: <span className="font-bold italic text-green-600 ms-1">{`${article.cost}`}</span>
                 </p>
               )}
             </div>

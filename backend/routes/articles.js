@@ -8,7 +8,7 @@ const fs = require('fs')
 
 // GET ALL ARTICLES
 router.get('/', async (req, res) => {
-  const { page = 1, limit = 20 } = req.query
+  const { page = 1, limit = 100 } = req.query
 
   const pageNumber = Math.max(1, parseInt(page, 10))
   const limitNumber = Math.min(Math.max(1, parseInt(limit, 10)), 100)
@@ -42,7 +42,7 @@ router.post('/', upload.single('img'), async (req, res) => {
       aka: req.body.aka || null,
       actor: req.body.actor || null,
       signature: req.body.signature || null,
-      year: req.body.year ? parseInt(req.body.year, 10) : null,
+      year: req.body.year || null,
       rerelease: req.body.rerelease ? parseInt(req.body.rerelease, 10) : null,
       weight: req.body.weight || null,
       movieType: req.body.movieType || null,
@@ -53,7 +53,7 @@ router.post('/', upload.single('img'), async (req, res) => {
       description: req.body.description || null,
       sku: req.body.sku,
       skuLetter: req.body.skuLetter || null,
-      cost: req.body.cost ? parseFloat(req.body.cost) : null,
+      cost: req.body.cost || null,
       color: req.body.color,
       movieNumber: req.body.movieNumber || null,
       price: req.body.price ? parseFloat(req.body.price) : null,
@@ -91,7 +91,7 @@ router.patch('/:sku', upload.single('img'), async (req, res) => {
       aka: req.body.aka || null,
       actor: req.body.actor || null,
       signature: req.body.signature || null,
-      year: req.body.year ? parseInt(req.body.year, 10) : article.year,
+      year: req.body.year || null,
       rerelease: req.body.rerelease ? parseInt(req.body.rerelease, 10) : article.rerelease,
       weight: req.body.weight || article.weight,
       movieType: req.body.movieType || null,
@@ -102,7 +102,7 @@ router.patch('/:sku', upload.single('img'), async (req, res) => {
       description: req.body.description || null,
       sku: req.body.sku || article.sku,
       skuLetter: req.body.skuLetter || null,
-      cost: req.body.cost ? parseFloat(req.body.cost) : article.cost,
+      cost: req.body.cost || null,
       color: req.body.color || article.color,
       movieNumber: req.body.movieNumber || null,
       price: req.body.price ? parseFloat(req.body.price) : article.price,

@@ -28,7 +28,7 @@ const Article = sequelize.define('Article', {
     type: DataTypes.STRING,
   },
   year: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   rerelease: {
     type: DataTypes.INTEGER,
@@ -66,11 +66,11 @@ const Article = sequelize.define('Article', {
   skuLetter: {
     type: DataTypes.STRING(1),
     validate: {
-      isIn: [['C', 'L', 'O', 'P']],
+      isIn: [['C', 'L', 'O', 'P', 'S']],
     },
   },
   cost: {
-    type: DataTypes.DECIMAL(10, 2),
+    type: DataTypes.STRING,
   },
   color: {
     type: DataTypes.STRING,
@@ -78,7 +78,6 @@ const Article = sequelize.define('Article', {
   },
   movieNumber: {
     type: DataTypes.STRING(12),
-    unique: true,
   },
 })
 

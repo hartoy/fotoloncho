@@ -41,17 +41,6 @@ const MyForm = ({ isEditing, initialValues }) => {
     }
   }
 
-  const handleMovieNumberChange = async (e, setFieldValue, values) => {
-    const newMovieNumber = e.target.value
-    setFieldValue('movieNumber', newMovieNumber)
-    if (!isEditing || newMovieNumber !== initialValues.movieNumber) {
-      const { available, message } = await checkMovieNumberAvailability(newMovieNumber)
-      setMovieNumberAvailabilityMessage(available ? message : 'El movieNumber ya existe. Cambia el valor.')
-    } else {
-      setMovieNumberAvailabilityMessage('')
-    }
-  }
-
   const handleSubmit = async (values) => {
     setLoading(true)
     try {
@@ -101,7 +90,7 @@ const MyForm = ({ isEditing, initialValues }) => {
 
       const a = document.createElement('a')
       a.href = url
-      a.download = `${title}.html`
+      a.download = `${sku} - ${title}.html`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
@@ -232,6 +221,7 @@ const MyForm = ({ isEditing, initialValues }) => {
                 <option value="L">L</option>
                 <option value="O">O</option>
                 <option value="P">P</option>
+                <option value="S">S</option>
               </Field>
               <ErrorMessage name="skuLetter" component="div" className="text-red-500 pl-2 pt-2 font-semibold" />
             </div>
@@ -330,7 +320,6 @@ const MyForm = ({ isEditing, initialValues }) => {
               <Field
                 name="movieNumber"
                 className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
-                onChange={(e) => handleMovieNumberChange(e, setFieldValue, values)}
               />
               <ErrorMessage name="movieNumber" component="div" className="text-red-500 pl-2 pt-2 font-semibold" />
               {movieNumberAvailabilityMessage && (
@@ -446,7 +435,6 @@ const MyForm = ({ isEditing, initialValues }) => {
               <label className="block mb-1 pl-1 font-semibold">Costo</label>
               <Field
                 name="cost"
-                type="number"
                 className="border p-2 w-full pl-2 focus:outline-none focus:ring-2 focus:ring-[#640D5F] focus:border-[#640D5F]"
               />
               <ErrorMessage name="cost" component="div" className="text-red-500 pl-2 pt-2 font-semibold" />
