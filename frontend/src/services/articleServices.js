@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export const getArticles = async (page = 1, limit = 20) => {
+export const getArticles = async (page = 1, limit = 100) => {
   try {
     const response = await axios.get(`${API_URL}/api/articles?page=${page}&limit=${limit}`)
     return response.data
