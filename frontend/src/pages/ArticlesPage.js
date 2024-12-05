@@ -131,7 +131,7 @@ const ArticlesPage = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredArticles.length > 0 ? (
+          {filteredArticles && filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
               <Article
                 key={article.id}
