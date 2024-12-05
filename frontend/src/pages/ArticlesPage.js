@@ -8,7 +8,7 @@ const ArticlesPage = () => {
   const [filteredArticles, setFilteredArticles] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchType, setSearchType] = useState('title')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [error, setError] = useState(null)
