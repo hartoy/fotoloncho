@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Article = ({ article, onEdit, onDelete }) => {
+const Article = ({ article, onDelete }) => {
   const navigate = useNavigate()
 
   const handleEdit = () => {
@@ -56,7 +56,7 @@ const Article = ({ article, onEdit, onDelete }) => {
             Editar
           </button>
           <button
-            onClick={() => onDelete(article.id)}
+            onClick={onDelete}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200 hover:scale-110"
           >
             Eliminar

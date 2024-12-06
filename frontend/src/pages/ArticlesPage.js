@@ -42,7 +42,6 @@ const ArticlesPage = () => {
           setFilteredArticles(articles)
         } else {
           const response = await searchArticles(searchType, searchQuery)
-          console.log(`Resultados de la búsqueda por ${searchType}:`, response)
           setFilteredArticles(response)
         }
       } catch (error) {
@@ -59,10 +58,6 @@ const ArticlesPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault()
-  }
-
-  const handleEdit = (id) => {
-    console.log('Editar artículo con ID:', id)
   }
 
   const handleDelete = async (sku) => {
@@ -133,12 +128,7 @@ const ArticlesPage = () => {
         <div className="space-y-4">
           {filteredArticles && filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
-              <Article
-                key={article.id}
-                article={article}
-                onEdit={handleEdit}
-                onDelete={() => handleDelete(article.sku)}
-              />
+              <Article key={article.id} article={article} onDelete={() => handleDelete(article.sku)} />
             ))
           ) : (
             <div className="flex flex-col items-center justify-center mt-12">
